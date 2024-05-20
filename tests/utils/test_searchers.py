@@ -1,13 +1,15 @@
 # %% IMPORTS
 
-from bikes.core import metrics, models, schemas
+from bikes.core import metrics, schemas
 from bikes.utils import searchers, splitters
+
+from mlopskit import model
 
 # %% SEARCHERS
 
 
 def test_grid_cv_searcher(
-    model: models.Model,
+    model: model.Model,
     metric: metrics.Metric,
     inputs: schemas.Inputs,
     targets: schemas.Targets,

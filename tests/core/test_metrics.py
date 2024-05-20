@@ -2,7 +2,9 @@
 
 
 import pytest
-from bikes.core import metrics, models, schemas
+from bikes.core import metrics, schemas
+
+from mlopskit import model
 
 # %% METRICS
 
@@ -18,7 +20,7 @@ def test_sklearn_metric(
     name: str,
     interval: tuple[int, int],
     greater_is_better: bool,
-    model: models.Model,
+    model: model.Model,
     inputs: schemas.Inputs,
     targets: schemas.Targets,
     outputs: schemas.Outputs,

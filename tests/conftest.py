@@ -12,6 +12,8 @@ from bikes.core import metrics, models, schemas
 from bikes.io import datasets, registries, services
 from bikes.utils import searchers, signers, splitters
 
+from mlopskit import model as mlops_model
+
 # %% CONFIGS
 
 LIMIT = 1500
@@ -320,7 +322,7 @@ def register() -> registries.MlflowRegister:
 
 @pytest.fixture(scope="function")
 def model_version(
-    model: models.Model,
+    model: mlops_model.Model,
     inputs: schemas.Inputs,
     signature: signers.Signature,
     saver: registries.Saver,

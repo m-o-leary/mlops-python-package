@@ -1,8 +1,10 @@
 # %% IMPORTS
 
-from bikes.core import models, schemas
+from bikes.core import schemas
 from bikes.io import registries, services
 from bikes.utils import signers
+
+from mlopskit import model
 
 # %% HELPERS
 
@@ -31,7 +33,7 @@ def test_uri_for_model_version() -> None:
 
 
 def test_custom_pipeline(
-    model: models.Model,
+    model: model.Model,
     inputs: schemas.Inputs,
     signature: signers.Signature,
     mlflow_service: services.MlflowService,
@@ -79,7 +81,7 @@ def test_custom_pipeline(
 
 
 def test_builtin_pipeline(
-    model: models.Model,
+    model: model.Model,
     inputs: schemas.Inputs,
     signature: signers.Signature,
     mlflow_service: services.MlflowService,

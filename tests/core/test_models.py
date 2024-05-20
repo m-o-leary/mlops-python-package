@@ -5,12 +5,14 @@ import typing as T
 import pytest
 from bikes.core import models, schemas
 
+from mlopskit import model
+
 # %% MODELS
 
 
 def test_model() -> None:
     # given
-    class MyModel(models.Model):
+    class MyModel(model.Model):
         KIND: T.Literal["MyModel"] = "MyModel"
 
         # public

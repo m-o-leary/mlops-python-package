@@ -1,9 +1,11 @@
 # %% IMPORTS
 
 from bikes import jobs
-from bikes.core import metrics, models
+from bikes.core import metrics
 from bikes.io import datasets, services
 from bikes.utils import searchers, splitters
+
+from mlopskit import model
 
 # %% JOBS
 
@@ -13,7 +15,7 @@ def test_tuning_job(
     logger_service: services.LoggerService,
     inputs_reader: datasets.Reader,
     targets_reader: datasets.Reader,
-    model: models.Model,
+    model: model.Model,
     metric: metrics.Metric,
     time_series_splitter: splitters.Splitter,
     searcher: searchers.Searcher,
