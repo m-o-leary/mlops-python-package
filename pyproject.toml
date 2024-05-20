@@ -3,7 +3,7 @@
 # PROJECT
 
 [tool.poetry]
-name = "bikes"
+name = "mlopskit"
 version = "1.0.0"
 description = "Predict the number of bikes available."
 repository = "https://github.com/fmind/mlops-python-package"
@@ -12,7 +12,7 @@ authors = ["Médéric HURIER <github@fmind.dev>"]
 readme = "README.md"
 license = "CC BY"
 keywords = ["mlops", "python", "package"]
-packages = [{ include = "bikes", from = "src" }]
+packages = [{ include = "bikes", from = "src" }, { include = "mlopskit" }]
 
 # SCRIPTS
 
@@ -84,11 +84,13 @@ strict = true
 python_version = "3.12"
 check_untyped_defs = true
 ignore_missing_imports = true
+show_column_numbers = true
+show_error_codes = true
 plugins = ["pandera.mypy", "pydantic.mypy"]
 
 [tool.pytest.ini_options]
 addopts = "--verbosity=2"
-pythonpath = ["src"]
+pythonpath = ["src", "mlopskit"]
 
 [tool.ruff]
 fix = true
