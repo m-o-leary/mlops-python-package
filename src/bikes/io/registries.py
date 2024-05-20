@@ -8,13 +8,14 @@ import typing as T
 import mlflow
 import pydantic as pdt
 
-from bikes.core import models, schemas
+from bikes.core import schemas
 from bikes.utils import signers
+from mlopskit import model
 
 # %% TYPES
 
 # Results of model registry operations
-Info: T.TypeAlias = mlflow.models.model.ModelInfo
+Info: T.TypeAlias = mlflow.model.Model.ModelInfo
 Alias: T.TypeAlias = mlflow.entities.model_registry.ModelVersion
 Version: T.TypeAlias = mlflow.entities.model_registry.ModelVersion
 
@@ -66,12 +67,12 @@ class Saver(abc.ABC, pdt.BaseModel, strict=True, frozen=True, extra="forbid"):
 
     @abc.abstractmethod
     def save(
-        self, model: models.Model, signature: signers.Signature, input_example: schemas.Inputs
+        self, model: model.Model, signature: signers.Signature, input_example: schemas.Inputs
     ) -> Info:
         """Save a model in the model registry.
 
         Args:
-            model (models.Model): project model to save.
+            model (model.Model): project model to save.
             signature (signers.Signature): model signature.
             input_example (schemas.Inputs): sample of inputs.
 
@@ -94,11 +95,11 @@ class CustomSaver(Saver):
         https://mlflow.org/docs/latest/python_api/mlflow.pyfunc.html?#mlflow.pyfunc.PythonModel
         """
 
-        def __init__(self, model: models.Model):
+        def __init__(self, model: model.Model):
             """Initialize the custom saver adapter.
 
             Args:
-                model (models.Model): project model.
+                model (model.Model): project model.
             """
             self.model = model
 
@@ -122,7 +123,7 @@ class CustomSaver(Saver):
 
     @T.override
     def save(
-        self, model: models.Model, signature: signers.Signature, input_example: schemas.Inputs
+        self, model: model.Model, signature: signers.Signature, input_example: schemas.Inputs
     ) -> Info:
         adapter = CustomSaver.Adapter(model=model)
         return mlflow.pyfunc.log_model(
@@ -149,7 +150,7 @@ class BuiltinSaver(Saver):
     @T.override
     def save(
         self,
-        model: models.Model,
+        model: model.Model,
         signature: signers.Signature,
         input_example: schemas.Inputs | None = None,
     ) -> mlflow.entities.model_registry.ModelVersion:

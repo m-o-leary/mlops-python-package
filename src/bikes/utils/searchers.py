@@ -9,19 +9,20 @@ import pandas as pd
 import pydantic as pdt
 from sklearn import model_selection
 
-from bikes.core import metrics, models, schemas
+from bikes.core import metrics, schemas
 from bikes.utils import splitters
+from mlopskit import model
 
 # %% TYPES
 
 # Grid of model params
-Grid = dict[models.ParamKey, list[models.ParamValue]]
+Grid = dict[model.ParamKey, list[model.ParamValue]]
 
 # Results of a model search
 Results = tuple[
     T.Annotated[pd.DataFrame, "details"],
     T.Annotated[float, "best score"],
-    T.Annotated[models.Params, "best params"],
+    T.Annotated[model.Params, "best params"],
 ]
 
 # Cross-validation options for searchers
@@ -47,7 +48,7 @@ class Searcher(abc.ABC, pdt.BaseModel, strict=True, frozen=True, extra="forbid")
     @abc.abstractmethod
     def search(
         self,
-        model: models.Model,
+        model: model.Model,
         metric: metrics.Metric,
         inputs: schemas.Inputs,
         targets: schemas.Targets,
@@ -56,7 +57,7 @@ class Searcher(abc.ABC, pdt.BaseModel, strict=True, frozen=True, extra="forbid")
         """Search the best model for the given inputs and targets.
 
         Args:
-            model (models.Model): AI/ML model to fine-tune.
+            model (model.Model): AI/ML model to fine-tune.
             metric (metrics.Metric): main metric to optimize.
             inputs (schemas.Inputs): model inputs for tuning.
             targets (schemas.Targets): model targets for tuning.
@@ -91,7 +92,7 @@ class GridCVSearcher(Searcher):
     @T.override
     def search(
         self,
-        model: models.Model,
+        model: model.Model,
         metric: metrics.Metric,
         inputs: schemas.Inputs,
         targets: schemas.Targets,
