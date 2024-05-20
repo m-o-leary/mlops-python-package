@@ -23,13 +23,13 @@ def format(ctx: Context) -> None:
 @task
 def type(ctx: Context) -> None:
     """Check the types with mypy."""
-    ctx.run("poetry run mypy src/ tasks/ tests/")
+    ctx.run("poetry run mypy mlopskit/ src/ tasks/ tests/")
 
 
 @task
 def code(ctx: Context) -> None:
     """Check the codes with ruff."""
-    ctx.run("poetry run ruff check src/ tasks/ tests/")
+    ctx.run("poetry run ruff check mlopskit/ src/ tasks/ tests/")
 
 
 @task
