@@ -8,7 +8,8 @@ import typing as T
 import pydantic as pdt
 from sklearn import metrics
 
-from bikes.core import models, schemas
+from bikes.core import schemas
+from mlopskit import model
 
 # %% METRICS
 
@@ -39,13 +40,11 @@ class Metric(abc.ABC, pdt.BaseModel, strict=True, frozen=True, extra="forbid"):
             float: single result from the metric computation.
         """
 
-    def scorer(
-        self, model: models.Model, inputs: schemas.Inputs, targets: schemas.Targets
-    ) -> float:
+    def scorer(self, model: model.Model, inputs: schemas.Inputs, targets: schemas.Targets) -> float:
         """Score the model outputs against targets.
 
         Args:
-            model (models.Model): model to evaluate.
+            model (model.Model): model to evaluate.
             inputs (schemas.Inputs): model inputs values.
             targets (schemas.Targets): model expected values.
 
